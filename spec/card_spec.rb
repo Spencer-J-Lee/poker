@@ -21,4 +21,10 @@ describe Card do
 			expect(Card.ranks).to eq(%i(one two three four five six seven eight nine ten jack queen king ace))
 		end
 	end
+
+	describe "::suits" do
+		it "returns an array of all suits" do
+			expect(Card.suits).to eq(%i(clubs diamonds hearts spades))
+		end
+	end
 end

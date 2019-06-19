@@ -4,7 +4,11 @@ class Card
 	def self.ranks
 		VALUES.keys
 	end
-	
+
+	def self.suits
+		%i(clubs diamonds hearts spades)
+	end
+
 	VALUES = {
 		one:    1,
 		two:    2,
