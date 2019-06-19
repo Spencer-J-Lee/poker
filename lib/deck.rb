@@ -5,11 +5,9 @@ class Deck
 
 	def self.shuffled_deck
 		deck = []
-
 		Card.ranks.each do |rank|
 			Card.suits.each { |suit| deck << Card.new(rank, suit) }
 		end
-
 		deck.shuffle
 	end
 
