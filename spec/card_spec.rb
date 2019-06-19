@@ -18,7 +18,7 @@ describe Card do
 
 	describe "::ranks" do
 		it "returns an array of all ranks" do
-			expect(Card.ranks).to eq(%i(one two three four five six seven eight nine ten jack queen king ace))
+			expect(Card.ranks).to eq(%i(two three four five six seven eight nine ten jack queen king ace))
 		end
 	end
 
