@@ -1,6 +1,10 @@
 class Card
 	attr_reader :rank, :suit, :value
 
+	def self.ranks
+		VALUES.keys
+	end
+	
 	VALUES = {
 		one:    1,
 		two:    2,

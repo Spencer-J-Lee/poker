@@ -15,4 +15,10 @@ describe Card do
 	it "holds a value" do
 		expect(card.value).to eq(14)
 	end
+
+	describe "::ranks" do
+		it "returns an array of all ranks" do
+			expect(Card.ranks).to eq(%i(one two three four five six seven eight nine ten jack queen king ace))
+		end
+	end
 end
