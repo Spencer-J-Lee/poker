@@ -14,50 +14,59 @@ describe Hand do
 	let(:tenS  ) { double("card", rank: :ten,   suit: :spades,   value: 10) }
 	let(:nineS ) { double("card", rank: :nine,  suit: :spades,   value: 9) }
 	let(:nineH ) { double("card", rank: :nine,  suit: :hearts,   value: 9) }
-
+	
 	let(:royal_flush_hand) do
-		[aceS,kingS,queenS,jackS,tenS].each { |card| hand.add_card(card) }
-		hand
+		new_hand = Hand.new
+		[aceS,kingS,queenS,jackS,tenS].each { |card| new_hand.add_card(card) }
+		new_hand
 	end
 
 	let(:straight_flush_hand) do
-		[kingS,queenS,jackS,tenS,nineS].each { |card| hand.add_card(card) }
-		hand
+		new_hand = Hand.new
+		[kingS,queenS,jackS,tenS,nineS].each { |card| new_hand.add_card(card) }
+		new_hand
 	end
 
 	let(:four_of_a_kind_hand) do
-		[aceS,aceH,aceD,aceC,nineH].each { |card| hand.add_card(card) }
-		hand
+		new_hand = Hand.new
+		[aceS,aceH,aceD,aceC,nineH].each { |card| new_hand.add_card(card) }
+		new_hand
 	end
 
 	let(:full_house_hand) do
-		[aceS,aceH,aceD,nineS,nineH].each { |card| hand.add_card(card) }
-		hand
+		new_hand = Hand.new
+		[aceS,aceH,aceD,nineS,nineH].each { |card| new_hand.add_card(card) }
+		new_hand
 	end
 
 	let(:flush_hand) do
-		[aceS,kingS,queenS,jackS,nineS].each { |card| hand.add_card(card) }
-		hand
+		new_hand = Hand.new
+		[aceS,kingS,queenS,jackS,nineS].each { |card| new_hand.add_card(card) }
+		new_hand
 	end
 
 	let(:straight_hand) do
-		[kingS,queenS,jackS,tenS,nineH].each { |card| hand.add_card(card) }
-		hand
+		new_hand = Hand.new
+		[kingS,queenS,jackS,tenS,nineH].each { |card| new_hand.add_card(card) }
+		new_hand
 	end
 
 	let(:three_of_a_kind_hand) do
-		[aceS,aceH,aceD,tenS,nineS].each { |card| hand.add_card(card) }
-		hand
+		new_hand = Hand.new
+		[aceS,aceH,aceD,tenS,nineS].each { |card| new_hand.add_card(card) }
+		new_hand
 	end
 
 	let(:two_pair_hand) do
-		[aceS,aceH,kingS,kingH,nineS].each { |card| hand.add_card(card) }
-		hand
+		new_hand = Hand.new
+		[aceS,aceH,kingS,kingS,nineS].each { |card| new_hand.add_card(card) }
+		new_hand
 	end
 
 	let(:one_pair_hand) do
-		[aceS,aceH,queenS,jackS,tenS].each { |card| hand.add_card(card) }
-		hand
+		new_hand = Hand.new
+		[aceS,aceH,queenS,jackS,tenS].each { |card| new_hand.add_card(card) }
+		new_hand
 	end
 
 	it "initializes an empty hand" do
@@ -147,6 +156,8 @@ describe Hand do
 
 	describe "#four_of_a_kind?" do
 		it "determines whether a four of a kind is present" do
+			expect(four_of_a_kind_hand.four_of_a_kind?).to be(true)
+			expect(two_pair_hand.four_of_a_kind?).to be(false)
 		end
 	end
 
