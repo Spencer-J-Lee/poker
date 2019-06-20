@@ -43,6 +43,7 @@ class Hand
 	end
 
 	def full_house?
+		three_of_a_kind? && one_pair?
 	end
 
 	def flush?

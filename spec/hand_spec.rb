@@ -165,6 +165,10 @@ describe Hand do
 	end
 
 	describe "#full_house?" do
+		it "determines if a full_house is present" do
+			expect(full_house_hand.full_house?).to be(true)
+			expect(one_pair_hand.full_house?).to be(false)
+		end
 	end
 
 	describe "#flush?" do
