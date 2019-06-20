@@ -21,4 +21,12 @@ describe Player do
 			expect(player.hand.cards).to include(card)
 		end
 	end
+
+	describe "#get_action" do
+		it "gets a valid action from the user" do
+			allow(player).to receive(:get_action).and_return("fold")
+			fold = player.get_action
+			expect(%w(fold see raise)).to include(fold)
+		end
+	end
 end

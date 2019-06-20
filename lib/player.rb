@@ -10,19 +10,12 @@ class Player
 		hand.add_card(card)
 	end
 
-	def fold
-
+	def get_action
+		action = gets.chomp 
+		action = gets.chomp until %w(fold see raise).include?(action)
 	end
-	
-	def see
 
-	end
-	
-	def raise
-
-	end
-	
-	def discard
+	def discard(amount)
 
 	end
 end
