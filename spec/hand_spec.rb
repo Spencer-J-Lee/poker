@@ -110,6 +110,11 @@ describe Hand do
 			[kingS,jackS,tenS,nineS,nineH].shuffle.each { |card| hand.add_card(card) }
 			expect(hand.sorted_values).to eq([9,9,13,11,10])
 		end
+
+		it "returns singles in descending order in the absence of repeats" do
+			[kingS,jackS,tenS,nineS,queenS].shuffle.each { |card| hand.add_card(card) }
+			expect(hand.sorted_values).to eq([13,12,11,10,9])
+		end
 	end
 
 	describe "#repeats_tracker" do
