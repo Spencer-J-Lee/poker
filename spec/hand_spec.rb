@@ -11,8 +11,8 @@ describe Hand do
 	let(:queenS) { double("card", rank: :queen, suit: :spades,   value: 12) }
 	let(:jackS ) { double("card", rank: :jack,  suit: :spades,   value: 11) }
 	let(:tenS  ) { double("card", rank: :ten,   suit: :spades,   value: 10) }
-	let(:nineS ) { double("card", rank: :nine,  suit: :spades,   value: 10) }
-	let(:nineH ) { double("card", rank: :nine,  suit: :hearts,   value: 10) }
+	let(:nineS ) { double("card", rank: :nine,  suit: :spades,   value: 9) }
+	let(:nineH ) { double("card", rank: :nine,  suit: :hearts,   value: 9) }
 
 	let(:royal_flush) do
 		[aceS,kingS,queenS,jackS,tenS].each { |card| hand.add_card(card) }
@@ -92,5 +92,54 @@ describe Hand do
 			[aceS,aceH,aceD,aceC,nineS].each { |card| hand.add_card(card) }
 			expect(hand.suits).to eq(%i(spades hearts diamonds clubs spades))
 		end
+	end
+
+	describe "#sorted_values" do
+		it "returns cards with more repeats first" do
+			[nineS,nineS,nineS,queenS,kingS].shuffle.each { |card| hand.add_card(card) }
+			expect(hand.sorted_values).to eq([9,9,9,13,12])
+		end
+
+		it "returns cards with more repeats first even if they are lower in rank" do
+			[nineS,nineS,nineS,aceS,aceS].shuffle.each { |card| hand.add_card(card) }
+			expect(hand.sorted_values).to eq([9,9,9,14,14])
+		end
+
+		it "returns the higher pair first when two pairs are present" do
+			[nineS,nineS,aceS,aceS,kingS].shuffle.each { |card| hand.add_card(card) }
+			expect(hand.sorted_values).to eq([14,14,9,9,13])
+		end
+
+		it "returns singles in descending order after repeats" do
+			[kingS,jackS,tenS,nineS,nineH].shuffle.each { |card| hand.add_card(card) }
+			expect(hand.sorted_values).to eq([9,9,13,11,10])
+		end
+	end
+
+	describe "#royal_flush?" do
+	end
+
+	describe "#straight_flush?" do
+	end
+
+	describe "#four_of_a_kind?" do
+	end
+
+	describe "#full_house?" do
+	end
+
+	describe "#flush?" do
+	end
+
+	describe "#straight?" do
+	end
+
+	describe "#three_of_a_kind?" do
+	end
+
+	describe "#two_pair?" do
+	end
+
+	describe "#one_pair?" do
 	end
 end

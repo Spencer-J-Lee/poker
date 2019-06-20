@@ -1,3 +1,5 @@
+require_relative 'card'
+
 class Hand
 	attr_reader :cards
 
@@ -16,6 +18,13 @@ class Hand
 
 	def suits
 		cards.map(&:suit)
+	end
+
+	def sorted_values
+		values_group = values.group_by { |value| value }
+		values_group = values_group.sort_by { |k,v| k }
+		values_group = values_group.sort_by { |k,v| v.count}
+		values_group.map(&:last).flatten.reverse
 	end
 
 	def royal_flush?
@@ -45,6 +54,14 @@ class Hand
 	def one_pair?
 	end
 end
+
+# [8,4,8,8,8] => [8,8,8,8,4]
+
+# [2,5,2,2,5] => [2,2,2,5,5]
+
+# [2,6,4,2,2] => [2,2,2,6,4]
+
+# [5,3,5,8,8] => [8,8,5,5,3]
 
 =begin
 
