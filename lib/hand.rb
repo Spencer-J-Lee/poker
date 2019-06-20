@@ -33,9 +33,15 @@ class Hand
 	end
 
 	def royal_flush?
+		ace_high? && straight_flush?
+	end
+	
+	def ace_high?
+		values.max == 14
 	end
 
 	def straight_flush?
+		straight? && flush?
 	end
 
 	def four_of_a_kind?

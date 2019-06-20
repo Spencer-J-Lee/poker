@@ -152,9 +152,17 @@ describe Hand do
 	end
 
 	describe "#royal_flush?" do
+		it "determines if a royal_flush is present" do
+			expect(royal_flush_hand.royal_flush?).to be(true)
+			expect(one_pair_hand.royal_flush?).to be(false)
+		end
 	end
 
 	describe "#straight_flush?" do
+		it "determines if a straight_flush is present" do
+			expect(straight_flush_hand.straight_flush?).to be(true)
+			expect(one_pair_hand.straight_flush?).to be(false)
+		end
 	end
 
 	describe "#four_of_a_kind?" do
