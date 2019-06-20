@@ -50,6 +50,20 @@ class Hand
 	end
 
 	def straight?
+		ace_high_straight? || ace_low_straight?
+	end
+
+	def ace_high_straight?
+		potential_straight = sorted_values
+		(1..4).all? { |i| potential_straight[i] == potential_straight[0] - i }
+	end
+
+	def ace_low_straight?
+		low_ace = 1
+		potential_straight = sorted_values << low_ace
+		potential_straight.shift
+		potential_straight << low_ace
+		(1..4).all? { |i| potential_straight[i] == potential_straight[0] - i }
 	end
 
 	def three_of_a_kind?

@@ -4,16 +4,20 @@ require 'byebug'
 
 describe Hand do 
 	subject(:hand) { Hand.new }
-	let(:aceS  ) { double("card", rank: :ace,   suit: :spades,   value: 14) }
-	let(:aceH  ) { double("card", rank: :ace,   suit: :hearts,   value: 14) }
-	let(:aceD  ) { double("card", rank: :ace,   suit: :diamonds, value: 14) }
-	let(:aceC  ) { double("card", rank: :ace,   suit: :clubs,    value: 14) }
-	let(:kingS ) { double("card", rank: :king,  suit: :spades,   value: 13) }
-	let(:queenS) { double("card", rank: :queen, suit: :spades,   value: 12) }
-	let(:jackS ) { double("card", rank: :jack,  suit: :spades,   value: 11) }
-	let(:tenS  ) { double("card", rank: :ten,   suit: :spades,   value: 10) }
-	let(:nineS ) { double("card", rank: :nine,  suit: :spades,   value: 9) }
-	let(:nineH ) { double("card", rank: :nine,  suit: :hearts,   value: 9) }
+	let(:aceS   ) { double("card", rank: :ace,   suit: :spades,   value: 14) }
+	let(:aceH   ) { double("card", rank: :ace,   suit: :hearts,   value: 14) }
+	let(:aceD   ) { double("card", rank: :ace,   suit: :diamonds, value: 14) }
+	let(:aceC   ) { double("card", rank: :ace,   suit: :clubs,    value: 14) }
+	let(:kingS  ) { double("card", rank: :king,  suit: :spades,   value: 13) }
+	let(:queenS ) { double("card", rank: :queen, suit: :spades,   value: 12) }
+	let(:jackS  ) { double("card", rank: :jack,  suit: :spades,   value: 11) }
+	let(:tenS   ) { double("card", rank: :ten,   suit: :spades,   value: 10) }
+	let(:nineS  ) { double("card", rank: :nine,  suit: :spades,   value:  9) }
+	let(:nineH  ) { double("card", rank: :nine,  suit: :hearts,   value:  9) }
+	let(:fiveH  ) { double("card", rank: :five,  suit: :hearts,   value:  5) }
+	let(:fourH  ) { double("card", rank: :four,  suit: :hearts,   value:  4) }
+	let(:threeH ) { double("card", rank: :three, suit: :hearts,   value:  3) }
+	let(:twoH   ) { double("card", rank: :two,   suit: :hearts,   value:  2) }
 	
 	let(:royal_flush_hand) do
 		new_hand = Hand.new
@@ -87,8 +91,7 @@ describe Hand do
 
 	describe "#values" do
 		it "returns the hand mapped to each card's value" do
-			[aceS,kingS,queenS,jackS,tenS].each { |card| hand.add_card(card) }
-			expect(hand.values).to eq([14,13,12,11,10])
+			expect(royal_flush_hand.values).to eq([14,13,12,11,10])
 		end
 	end
 
@@ -165,13 +168,27 @@ describe Hand do
 	end
 
 	describe "#flush?" do
-		it "determines if a four of a kind is present" do
+		it "determines if a flush is present" do
 			expect(flush_hand.flush?).to be(true)
 			expect(one_pair_hand.flush?).to be(false)
 		end
 	end
 
 	describe "#straight?" do
+		it "determines if a straight is present" do
+			expect(straight_hand.straight?).to be(true)
+			expect(one_pair_hand.straight?).to be(false)
+		end
+
+		it "handles ace-high straights" do
+			[aceS,kingS,queenS,jackS,tenS].each { |card| hand.add_card(card) }
+			expect(hand.straight?).to be(true)
+		end
+
+		it "handles ace-low straights" do
+			[aceS,twoH,threeH,fourH,fiveH].each { |card| hand.add_card(card) }
+			expect(hand.straight?).to be(true)
+		end
 	end
 
 	describe "#three_of_a_kind?" do
