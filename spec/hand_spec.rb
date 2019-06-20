@@ -73,6 +73,12 @@ describe Hand do
 		new_hand
 	end
 
+	let(:high_card_hand) do
+		new_hand = Hand.new
+		[aceS,queenS,nineH,threeH,twoH].each { |card| new_hand.add_card(card) }
+		new_hand
+	end
+
 	it "initializes an empty hand" do
 		expect(hand.cards).to be_empty
 	end
@@ -86,6 +92,16 @@ describe Hand do
 		it "raises exception if hand already has 5 cards" do
 			5.times { hand.add_card(aceS) }
 			expect { hand.add_card(aceS) }.to raise_error(ArgumentError)
+		end
+	end
+
+	describe "#ranking" do
+		it "returns the hand's type and type score" do
+			expect(royal_flush_hand.ranking).to eq([:royal_flush, 9])
+		end
+
+		it "returns high card and high card score if no types are found" do
+			expect(high_card_hand.ranking).to eq([:high_card, 0])
 		end
 	end
 

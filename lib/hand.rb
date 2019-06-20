@@ -3,6 +3,18 @@ require_relative 'card'
 class Hand
 	attr_reader :cards
 
+	RANKING = {
+		royal_flush:     9,
+		straight_flush:  8,
+		four_of_a_kind:  7,
+		full_house:      6,
+		flush:           5,
+		straight:        4,
+		three_of_a_kind: 3, 
+		two_pair:        2,
+		one_pair:        1 
+	}
+
 	def initialize
 		@cards = []
 	end
@@ -10,6 +22,10 @@ class Hand
 	def add_card(card)
 		raise ArgumentError.new "Hand already has 5 cards" if cards.count == 5
 		@cards << card
+	end
+
+	def ranking
+		RANKING.detect { |method, score| send :"#{method}?" } || [:high_card, 0]
 	end
 
 	def values
