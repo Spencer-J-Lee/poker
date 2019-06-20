@@ -26,6 +26,10 @@ class Hand
 		@cards << card
 	end
 
+	def discard_at(card_index)
+		cards.delete_at(card_index)
+	end
+
 	def ranking
 		RANKING.detect { |method, score| send :"#{method}?" } || [:high_card, 0]
 	end
