@@ -77,7 +77,20 @@ describe Hand do
 
 	describe "#values" do
 		it "returns the hand mapped to each card's value" do
+			[aceS,kingS,queenS,jackS,tenS].each { |card| hand.add_card(card) }
+			expect(hand.values).to eq([14,13,12,11,10])
+		end
 
+		it "returns the values in descending order" do
+			[aceS,kingS,queenS,jackS,tenS].shuffle.each { |card| hand.add_card(card) }
+			expect(hand.values).to eq([14,13,12,11,10])
+		end
+	end
+
+	describe "#suits" do
+		it "returns the hand mapped to each card's suit" do
+			[aceS,aceH,aceD,aceC,nineS].each { |card| hand.add_card(card) }
+			expect(hand.suits).to eq(%i(spades hearts diamonds clubs spades))
 		end
 	end
 end

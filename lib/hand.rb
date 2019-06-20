@@ -14,6 +14,10 @@ class Hand
 		cards.map(&:value).sort.reverse
 	end
 
+	def suits
+		cards.map(&:suit)
+	end
+
 	def royal_flush?
 	end
 
