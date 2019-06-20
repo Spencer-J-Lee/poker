@@ -11,12 +11,24 @@ class Player
 	end
 
 	def get_action
-		action = gets.chomp 
-		action = gets.chomp until %w(fold see raise).include?(action)
+		action = $stdin.gets.chomp 
+		action = $stdin.gets.chomp until %w(fold see raise).include?(action)
+		action
+	end
+
+	def get_card_index
 	end
 
 	def discard(amount)
+		discarded = 0
 
+		until discarded == amount
+			card_index = get_card_index
+			hand.discard_at(card_index)
+			discarded += 1
+		end
+
+		nil
 	end
 end
 

@@ -31,5 +31,11 @@ describe Player do
 	end
 
 	describe "#discard" do
+		it "discards as many cards as the amount given" do
+			allow(player).to receive(:get_card_index).and_return(0)
+			player.add_card(card)
+			player.discard(1)
+			expect(player.hand.cards).to be_empty
+		end
 	end
 end
