@@ -46,6 +46,7 @@ class Hand
 	end
 
 	def flush?
+		suits.uniq.count == 1
 	end
 
 	def straight?
