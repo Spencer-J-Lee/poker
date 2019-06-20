@@ -157,7 +157,7 @@ describe Hand do
 	describe "#four_of_a_kind?" do
 		it "determines whether a four of a kind is present" do
 			expect(four_of_a_kind_hand.four_of_a_kind?).to be(true)
-			expect(two_pair_hand.four_of_a_kind?).to be(false)
+			expect(one_pair_hand.four_of_a_kind?).to be(false)
 		end
 	end
 
@@ -171,11 +171,23 @@ describe Hand do
 	end
 
 	describe "#three_of_a_kind?" do
+		it "determines whether a three of a kind is present" do
+			expect(three_of_a_kind_hand.three_of_a_kind?).to be(true)
+			expect(one_pair_hand.three_of_a_kind?).to be(false)
+		end
 	end
 
 	describe "#two_pair?" do
+		it "determines whether two pairs are present" do
+			expect(two_pair_hand.two_pair?).to be(true)
+			expect(one_pair_hand.two_pair?).to be(false)
+		end
 	end
 
 	describe "#one_pair?" do
+		it "determines whether one pair is present" do
+			expect(one_pair_hand.one_pair?).to be(true)
+			expect(two_pair_hand.one_pair?).to be(false)
+		end
 	end
 end
