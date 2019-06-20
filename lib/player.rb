@@ -28,6 +28,12 @@ class Player
 		discard_amount
 	end
 
+	def get_raise_amount
+		raise_amount = $stdin.gets.to_i
+		raise_amount = $stdin.gets.to_i until raise_amount.between?(1,pot)
+		raise_amount
+	end
+
 	def discard(amount)
 		discarded = 0
 

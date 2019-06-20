@@ -39,10 +39,18 @@ describe Player do
 	end
 
 	describe "#get_discard_amount" do
-		it "gets a valid card index from the user" do
+		it "gets a valid discard amount from the user" do
 			allow($stdin).to receive(:gets).and_return("3\n")
 			discard_amount = player.get_discard_amount
 			expect([0,1,2,3]).to include(discard_amount)
+		end
+	end
+
+	describe "#get_raise_amount" do
+		it "gets a valid raise amount from the user" do
+			allow($stdin).to receive(:gets).and_return("500\n")
+			raise_amount = player.get_raise_amount
+			expect((1..1000).to_a).to include(raise_amount)
 		end
 	end
 
