@@ -30,6 +30,14 @@ describe Player do
 		end
 	end
 
+	describe "#get_card_index" do
+		it "gets a valid card index from the user" do
+			allow($stdin).to receive(:gets).and_return("0")
+			card_index = player.get_card_index
+			expect([0,1,2,3,4]).to include(card_index)
+		end
+	end
+
 	describe "#discard" do
 		it "discards as many cards as the amount given" do
 			allow(player).to receive(:get_card_index).and_return(0)

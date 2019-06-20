@@ -17,6 +17,9 @@ class Player
 	end
 
 	def get_card_index
+		card_index = $stdin.gets.to_i
+		card_index = $stdin.gets.to_i until card_index.between?(0,4)
+		card_index
 	end
 
 	def discard(amount)
