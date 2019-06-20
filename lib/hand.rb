@@ -8,12 +8,12 @@ class Hand
 	end
 
 	def add_card(card)
-		raise ArgumentError.new "Hand already has 5 cards" if cards.count >= 5
+		raise ArgumentError.new "Hand already has 5 cards" if cards.count == 5
 		@cards << card
 	end
 
 	def values
-		cards.map(&:value).sort.reverse
+		cards.map(&:value)
 	end
 
 	def suits
@@ -39,6 +39,7 @@ class Hand
 	end
 
 	def four_of_a_kind?
+		repeats_tracker.include?(4)
 	end
 
 	def full_house?
@@ -51,12 +52,15 @@ class Hand
 	end
 
 	def three_of_a_kind?
+		repeats_tracker.include?(3)
 	end
 
 	def two_pair?
+		repeats_tracker.count(2) == 2
 	end
 
 	def one_pair?
+		repeats_tracker.count(2) == 1
 	end
 end
 

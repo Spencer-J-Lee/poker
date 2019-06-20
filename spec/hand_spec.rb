@@ -1,5 +1,6 @@
 require 'rspec'
 require 'hand'
+require 'byebug'
 
 describe Hand do 
 	subject(:hand) { Hand.new }
@@ -14,47 +15,47 @@ describe Hand do
 	let(:nineS ) { double("card", rank: :nine,  suit: :spades,   value: 9) }
 	let(:nineH ) { double("card", rank: :nine,  suit: :hearts,   value: 9) }
 
-	let(:royal_flush) do
+	let(:royal_flush_hand) do
 		[aceS,kingS,queenS,jackS,tenS].each { |card| hand.add_card(card) }
 		hand
 	end
 
-	let(:straight_flush) do
+	let(:straight_flush_hand) do
 		[kingS,queenS,jackS,tenS,nineS].each { |card| hand.add_card(card) }
 		hand
 	end
 
-	let(:four_of_a_kind) do
+	let(:four_of_a_kind_hand) do
 		[aceS,aceH,aceD,aceC,nineH].each { |card| hand.add_card(card) }
 		hand
 	end
 
-	let(:full_house) do
+	let(:full_house_hand) do
 		[aceS,aceH,aceD,nineS,nineH].each { |card| hand.add_card(card) }
 		hand
 	end
 
-	let(:flush) do
+	let(:flush_hand) do
 		[aceS,kingS,queenS,jackS,nineS].each { |card| hand.add_card(card) }
 		hand
 	end
 
-	let(:straight) do
+	let(:straight_hand) do
 		[kingS,queenS,jackS,tenS,nineH].each { |card| hand.add_card(card) }
 		hand
 	end
 
-	let(:three_of_a_kind) do
+	let(:three_of_a_kind_hand) do
 		[aceS,aceH,aceD,tenS,nineS].each { |card| hand.add_card(card) }
 		hand
 	end
 
-	let(:two_pair) do
+	let(:two_pair_hand) do
 		[aceS,aceH,kingS,kingH,nineS].each { |card| hand.add_card(card) }
 		hand
 	end
 
-	let(:one_pair) do
+	let(:one_pair_hand) do
 		[aceS,aceH,queenS,jackS,tenS].each { |card| hand.add_card(card) }
 		hand
 	end
@@ -78,11 +79,6 @@ describe Hand do
 	describe "#values" do
 		it "returns the hand mapped to each card's value" do
 			[aceS,kingS,queenS,jackS,tenS].each { |card| hand.add_card(card) }
-			expect(hand.values).to eq([14,13,12,11,10])
-		end
-
-		it "returns the values in descending order" do
-			[aceS,kingS,queenS,jackS,tenS].shuffle.each { |card| hand.add_card(card) }
 			expect(hand.values).to eq([14,13,12,11,10])
 		end
 	end
@@ -145,6 +141,8 @@ describe Hand do
 	end
 
 	describe "#four_of_a_kind?" do
+		it "determines whether a four of a kind is present" do
+		end
 	end
 
 	describe "#full_house?" do
