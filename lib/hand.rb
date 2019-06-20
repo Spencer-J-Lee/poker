@@ -28,6 +28,10 @@ class Hand
 		RANKING.detect { |method, score| send :"#{method}?" } || [:high_card, 0]
 	end
 
+	def ranking_score
+		ranking.last
+	end
+
 	def values
 		cards.map(&:value)
 	end

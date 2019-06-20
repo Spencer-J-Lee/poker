@@ -105,6 +105,12 @@ describe Hand do
 		end
 	end
 
+	describe "ranking_score" do
+		it "returns the hand's type score" do
+			expect(royal_flush_hand.ranking_score).to eq(9)
+		end
+	end
+
 	describe "#values" do
 		it "returns the hand mapped to each card's value" do
 			expect(royal_flush_hand.values).to eq([14,13,12,11,10])
