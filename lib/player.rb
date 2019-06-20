@@ -31,6 +31,7 @@ class Player
 	def get_raise_amount
 		raise_amount = $stdin.gets.to_i
 		raise_amount = $stdin.gets.to_i until raise_amount.between?(1,pot)
+		@pot -= raise_amount
 		raise_amount
 	end
 

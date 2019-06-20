@@ -52,6 +52,12 @@ describe Player do
 			raise_amount = player.get_raise_amount
 			expect((1..1000).to_a).to include(raise_amount)
 		end
+
+		it "subtracts raise amount from the pot" do
+			allow($stdin).to receive(:gets).and_return("600\n")
+			player.get_raise_amount
+			expect(player.pot).to eq(400)
+		end
 	end
 
 	describe "#discard" do
