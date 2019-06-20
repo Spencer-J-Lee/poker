@@ -22,6 +22,12 @@ class Player
 		card_index
 	end
 
+	def get_discard_amount
+		discard_amount = $stdin.gets.to_i
+		discard_amount = $stdin.gets.to_i until discard_amount.between?(0,3)
+		discard_amount
+	end
+
 	def discard(amount)
 		discarded = 0
 
