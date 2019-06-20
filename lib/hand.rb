@@ -22,9 +22,14 @@ class Hand
 
 	def sorted_values
 		values_group = values.group_by { |value| value }
-		values_group = values_group.sort_by { |k,v| k }
-		values_group = values_group.sort_by { |k,v| v.count}
+		values_group = values_group.sort_by { |value, group| value }
+		values_group = values_group.sort_by { |value, group| group.count}
 		values_group.map(&:last).flatten.reverse
+	end
+
+	def repeats_tracker
+		value_groups = values.group_by { |value| value }
+		value_groups.map { |value, group| group.count }
 	end
 
 	def royal_flush?

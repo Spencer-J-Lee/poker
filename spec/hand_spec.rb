@@ -116,6 +116,28 @@ describe Hand do
 		end
 	end
 
+	describe "#repeats_tracker" do
+		it "knows when a value has two copies" do
+			[nineS,nineS].each { |card| hand.add_card(card) }
+			expect(hand.repeats_tracker).to include(2)
+		end
+		
+		it "knows when a value has three copies" do
+			[nineS,nineS,nineS].each { |card| hand.add_card(card) }
+			expect(hand.repeats_tracker).to include(3)
+		end
+
+		it "knows when a value has four copies" do
+			[nineS,nineS,nineS,nineS].each { |card| hand.add_card(card) }
+			expect(hand.repeats_tracker).to include(4)
+		end
+
+		it "knows when there are two pairs" do
+			[nineS,nineS,aceS,aceS].shuffle.each { |card| hand.add_card(card) }
+			expect(hand.repeats_tracker.count(2)).to eq(2)
+		end
+	end
+
 	describe "#royal_flush?" do
 	end
 
