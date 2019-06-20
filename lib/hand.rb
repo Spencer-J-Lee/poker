@@ -3,6 +3,8 @@ require_relative 'card'
 class Hand
 	attr_reader :cards
 
+	LOW_ACE = 1
+
 	RANKING = {
 		royal_flush:     9,
 		straight_flush:  8,
@@ -30,6 +32,17 @@ class Hand
 
 	def ranking_score
 		ranking.last
+	end
+
+	def score
+		sorted_values = self.sorted_values
+
+		if ace_low_straight?
+			sorted_values << LOW_ACE
+			sorted_values.shift
+		end
+
+		[ranking_score] + sorted_values
 	end
 
 	def values
@@ -86,10 +99,9 @@ class Hand
 	end
 
 	def ace_low_straight?
-		low_ace = 1
-		potential_straight = sorted_values << low_ace
+		potential_straight = sorted_values
 		potential_straight.shift
-		potential_straight << low_ace
+		potential_straight << LOW_ACE
 		(1..4).all? { |i| potential_straight[i] == potential_straight[0] - i }
 	end
 

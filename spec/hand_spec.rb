@@ -111,6 +111,17 @@ describe Hand do
 		end
 	end
 
+	describe "score" do
+		it "returns the hand's ranking score and sorted values" do
+			expect(royal_flush_hand.score).to eq([9,14,13,12,11,10])
+		end
+
+		it "handles ace low straights" do
+			[aceS,twoH,threeH,fourH,fiveH].each { |card| hand.add_card(card) }
+			expect(hand.score).to eq([4,5,4,3,2,1])
+		end
+	end
+
 	describe "#values" do
 		it "returns the hand mapped to each card's value" do
 			expect(royal_flush_hand.values).to eq([14,13,12,11,10])
