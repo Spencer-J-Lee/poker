@@ -24,9 +24,12 @@ describe Player do
 
 	describe "#get_action" do
 		it "gets a valid action from the user" do
-			allow(player).to receive(:get_action).and_return("fold")
-			fold = player.get_action
-			expect(%w(fold see raise)).to include(fold)
+			allow($stdin).to receive(:gets).and_return("fold\n")
+			action = player.get_action
+			expect(%w(fold see raise)).to include(action)
 		end
+	end
+
+	describe "#discard" do
 	end
 end
