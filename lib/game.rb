@@ -41,19 +41,19 @@ class Game
 	end
 
 	def find_winners_by_hand
-		scoreboard = {}
-		players.each { |player| scoreboard[player] = player.score }
+		# returns a 2D-array of the player's score with the last element being the player itself
+		scoreboard = players.map { |player| player.score << player }
 
-		scores = scoreboard.values.uniq
-
+		# iterates through each player's score and compares scores by index
+		# scores with numbers at the current index that are lower than the current max are rejected
+		# stops before reaching the actual player in the score array
 		6.times do |i|
-			decisive_scores = scores.map { |score| score[i] }
-			scores = scores.reject { |score| score[i] != decisive_scores.max }
+			decisive_scores = scoreboard.map { |score| score[i] }
+			scoreboard      = scoreboard.reject { |score| score[i] != decisive_scores.max }
 		end
 
-		winning_score = scores.first
-
-		round_winners = scoreboard.keys.select { |player| scoreboard[player] == winning_score }
+		# returns all players who have winning hands
+		round_winners = scoreboard.map(&:last)
 	end
 
 	def determine_winner
