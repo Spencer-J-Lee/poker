@@ -15,6 +15,37 @@ class Game
 		players.one? { |player| !player.pot.zero? }
 	end
 
+	def play
+		until over?
+			round = 1
+			deal_cards
+
+			until the round is over? (only one player isnt folded) || round == 4 (if the final round of betting already happened)
+				if round.odd?
+					until we have reached full rotation
+						next_player! while current_player.folded?
+						betting_turn
+						next_player!
+					end
+				else
+					until we have reached full rotation
+						next_player! while current_player.folded?
+						discard_turn
+						next_player!
+					end
+				end
+
+				round += 1
+			end
+
+			determine the round winner(s)
+			distribute the pot
+			reset player hands and folded states
+		end
+
+		determine the game winner
+	end
+
 	def next_player!
 		@players.rotate!
 		@current_player = players.first
