@@ -33,7 +33,27 @@ class Game
 	end
 	
 	def round_winner
+		over_by_fold? ? find_winner_by_fold : find_winner_by_hand
+	end
+
+	def find_winner_by_fold
 		players.find { |player| !player.folded? }
+	end
+
+	def find_winners_by_hand
+		scoreboard = {}
+		players.each { |player| scoreboard[player] = player.score }
+
+		scores = scoreboard.values.uniq
+
+		6.times do |i|
+			decisive_scores = scores.map { |score| score[i] }
+			scores = scores.reject { |score| score[i] != decisive_scores.max }
+		end
+
+		winning_score = scores.first
+
+		round_winners = scoreboard.keys.select { |player| scoreboard[player] == winning_score }
 	end
 
 	def determine_winner
@@ -109,4 +129,3 @@ class Game
 		amount.times { current_player.add_card(deck.draw) }
 	end
 end
-

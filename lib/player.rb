@@ -70,6 +70,10 @@ class Player
 		action = $stdin.gets.chomp until %w(fold see raise).include?(action)
 		action
 	end
+
+	def inspect
+		{ id: self.object_id }.inspect
+	end
 end
 
 =begin

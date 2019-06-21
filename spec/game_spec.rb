@@ -82,6 +82,40 @@ describe Game do
 		end
 	end
 
+	describe "#find_winner_by_fold" do
+		it "returns the player who hasn't folded" do
+			allow(player1).to receive(:folded?).and_return(true)
+			allow(player2).to receive(:folded?).and_return(false)
+			expect(game.find_winner_by_fold).to be(player2)
+		end
+	end
+
+	describe "#find_winners_by_hand" do
+		let(:aceS) { Card.new(:ace, :spades) }
+		let(:kingS) { Card.new(:king, :spades) }
+		let(:queenS) { Card.new(:queen, :spades) }
+
+		before(:each) do
+			4.times do
+				player1.add_card(aceS)
+				player2.add_card(aceS)
+			end
+		end
+
+		it "returns the player with the winning hand" do
+			player1.add_card(kingS)
+			player2.add_card(queenS)
+			expect(game.find_winners_by_hand.first).to be(player1)
+		end
+
+		it "returns all players who tied winning hands" do
+			player1.add_card(kingS)
+			player2.add_card(kingS)
+			expect(game.find_winners_by_hand.first).to be(player1)
+			expect(game.find_winners_by_hand.last).to be(player2)
+		end
+	end
+
 	describe "#next_player!" do
 		before(:each) { game.next_player! }
 
