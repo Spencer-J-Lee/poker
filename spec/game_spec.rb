@@ -53,13 +53,4 @@ describe Game do
 			expect(game.current_player).to eq(player2)
 		end
 	end
-
-	describe "#deal_cards" do
-		let(:card) { double("card") }
-
-		it "deals 5 cards to each player" do
-			game.deal_cards
-			expect(player1.hand.cards.count).to eq(5)
-		end
-	end
 end

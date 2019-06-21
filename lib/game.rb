@@ -19,4 +19,8 @@ class Game
 		@players.rotate!
 		@current_player = players.first
 	end
+
+	def deal_cards
+		5.times { players.each { |player| player.add_card(deck.draw) } }
+	end
 end
