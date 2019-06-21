@@ -33,7 +33,7 @@ class Game
 	end
 	
 	def round_winner
-		over_by_fold? ? find_winner_by_fold : find_winner_by_hand
+		over_by_fold? ? find_winner_by_fold : find_winners_by_hand
 	end
 
 	def find_winner_by_fold
@@ -55,11 +55,6 @@ class Game
 		# returns all players who have winning hands
 		round_winners = scoreboard.map(&:last)
 	end
-
-	def determine_winner
-
-	end
-
 
 =begin
 	def play

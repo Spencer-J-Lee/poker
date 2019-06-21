@@ -75,10 +75,16 @@ describe Game do
 	end
 
 	describe "#round_winner" do
-		it "returns the player(s) who won the round" do
-			allow(player1).to receive(:folded?).and_return(true)
-			allow(player2).to receive(:folded?).and_return(false)
-			expect(game.round_winner).to be(player2)
+		it "calls #find_winner_by_fold if round ends by fold" do
+			allow(game).to receive(:over_by_fold?).and_return(true)
+			expect(game).to receive(:find_winner_by_fold)
+			game.round_winner
+		end
+			
+		it "calls #find_winners_by_hand if round doesn't end by fold" do
+			allow(game).to receive(:over_by_fold?).and_return(false)
+			expect(game).to receive(:find_winners_by_hand)
+			game.round_winner
 		end
 	end
 
