@@ -23,4 +23,18 @@ class Game
 	def deal_cards
 		5.times { players.each { |player| player.add_card(deck.draw) } }
 	end
+
+	def betting_round
+		action = current_player.get_action
+
+		case action
+		when 'raise'
+			pot += current_player.get_raise_amount
+		when 'fold'
+			current_player.fold
+		when 'see'
+			display_pot
+			retry
+		end
+	end
 end
