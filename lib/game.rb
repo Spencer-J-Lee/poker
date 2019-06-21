@@ -1,7 +1,7 @@
 require_relative 'player'
 require_relative 'deck'
 
-class Game
+class PokerGame
 	attr_reader :players, :current_player, :round, :deck, :pot
 
 	def initialize(*players)
@@ -12,36 +12,65 @@ class Game
 		@pot            = 0
 	end
 
-	# def play
-	# 	until over?
-	# 		@round = 1
-	# 		deal_cards
+	def play
+		until over?
+			@round = 1
+			deal_cards
 
-	# 		until round_over?
-	# 			if round.odd?
-	# 				until we have reached full rotation
-	# 					next_player! while current_player.folded? # cycle through players until we find one that hasn't folded
-	# 					betting_turn
-	# 					next_player!
-	# 				end
-	# 			else
-	# 				until we have reached full rotation
-	# 					next_player! while current_player.folded?
-	# 					discard_turn
-	# 					next_player!
-	# 				end
-	# 			end
+			until round_over?
+				if round.odd?
+					2.times do
+						system 'clear'
+						next_player! while current_player.folded? # cycle through players until we find one that hasn't folded
+						
+						puts  "#{current_player.name}'s turn"
+						puts
+						puts  "Current pot: #{pot}"
+						puts  "Wallet:      #{current_player.pot}"
+						print "Hand:        #{current_player.hand.cards}"
+						puts
+						puts
+						betting_turn
 
-	# 			@round += 1
-	# 		end
+						next_player!
+						puts "-----------"
+					end
+				else
+					2.times do
+						system 'clear'
+						next_player! while current_player.folded?
 
-	# 		round_winners
-	# 		distribute the pot
-	# 		reset player hands and folded states
-	# 	end
+						puts  "#{current_player.name}'s turn"
+						puts
+						puts  "Current pot: #{pot}"
+						puts  "Wallet:      #{current_player.pot}"
+						print "Hand:        #{current_player.hand.cards}"
+						puts
+						puts
+						discard_turn
 
-	# 	determine the game winner
-	# end
+						next_player!
+						puts "-----------"
+					end
+				end
+
+				@round += 1
+			end
+
+			system 'clear'
+			round_winners.each { |player| print player.name + " " }
+			puts "wins the round!"
+			puts
+			gets
+
+			distribute_pot
+			reset_players
+		end
+
+		
+		system 'clear'
+		puts "The winner is: #{game_winner.name}"
+	end
 
 	def over?
 		players.one? { |player| !player.pot.zero? }
@@ -64,7 +93,7 @@ class Game
 	end
 	
 	def round_winners
-		over_by_fold? ? find_winner_by_fold : find_winners_by_hand
+		over_by_fold? ? [find_winner_by_fold] : find_winners_by_hand
 	end
 
 	def find_winner_by_fold
@@ -104,11 +133,13 @@ class Game
 	end
 
 	def betting_turn
+		puts "Choose: raise / fold / see"
 		action = current_player.get_action
 
 		case action
 		when 'raise'
-			pot += current_player.get_raise_amount
+			puts "How much to raise?"
+			@pot += current_player.get_raise_amount
 		when 'fold'
 			current_player.fold
 		when 'see'
@@ -117,9 +148,15 @@ class Game
 	end
 
 	def discard_turn
+		puts "How many cards to discard? (0 to 3)"
 		amount = current_player.get_discard_amount
+
+		puts "Which cards to discard?"
 		current_player.discard(amount)
 		amount.times { current_player.add_card(deck.draw) }
+		print "New hand: #{current_player.hand.cards}"
+		puts
+		gets
 	end
 
 	def distribute_pot
@@ -131,4 +168,10 @@ class Game
 			@pot -= distribute_amt
 		end
 	end
+end
+
+if __FILE__ == $PROGRAM_NAME
+	system 'clear'
+	game = PokerGame.new(Player.new('P1'), Player.new('P2'))
+	game.play
 end

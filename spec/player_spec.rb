@@ -2,7 +2,7 @@ require 'rspec'
 require 'player'
 
 describe Player do
-	subject(:player) { Player.new }
+	subject(:player) { Player.new('Player') }
 	let(:card) { double("card", rank: 10, suit: :hearts, value: 10) }
 
 	describe "#initialize" do

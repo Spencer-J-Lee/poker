@@ -2,9 +2,10 @@ require_relative 'hand'
 require 'pry'
 
 class Player
-	attr_reader :hand, :pot, :folded
+	attr_reader :hand, :pot, :folded, :name
 
-	def initialize
+	def initialize(name)
+		@name   = name
 		@hand   = Hand.new
 		@pot    = 1000
 		@folded = false

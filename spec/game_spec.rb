@@ -1,10 +1,10 @@
 require 'rspec'
 require 'game'
 
-describe Game do
-	let(:player1) { Player.new }
-	let(:player2) { Player.new }
-	subject(:game) { Game.new(player1, player2)}
+describe PokerGame do
+	let(:player1) { Player.new('Player1') }
+	let(:player2) { Player.new('Player2') }
+	subject(:game) { PokerGame.new(player1, player2)}
 
 	describe "#initialize" do
 		it "takes any number of Player instances as an argument" do
