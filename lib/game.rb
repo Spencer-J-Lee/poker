@@ -16,7 +16,7 @@ class Game
 	end
 
 	def round_over?
-		players.one? { |player| !player.folded? }
+		players.one? { |player| !player.folded? } || @round == 4
 	end
 
 	def game_winner
@@ -30,10 +30,10 @@ class Game
 =begin
 	def play
 		until over?
-			round = 1
+			@round = 1
 			deal_cards
 
-			until the round is over? (only one player isnt folded) || round == 4 (if the final round of betting already happened)
+			until the round is over? (only one player isnt folded || the final round of betting already happened)
 				if round.odd?
 					until we have reached full rotation
 						next_player! while current_player.folded? # cycle through players until we find one that hasn't folded
@@ -48,7 +48,7 @@ class Game
 					end
 				end
 
-				round += 1
+				@round += 1
 			end
 
 			determine the round winner(s)
