@@ -2,11 +2,12 @@ require_relative 'player'
 require_relative 'deck'
 
 class Game
-	attr_reader :players, :current_player, :deck, :pot
+	attr_reader :players, :current_player, :round, :deck, :pot
 
 	def initialize(*players)
 		@players        = players
 		@current_player = players.first
+		@round          = nil
 		@deck           = Deck.new
 		@pot            = 0
 	end
@@ -16,7 +17,15 @@ class Game
 	end
 
 	def round_over?
-		players.one? { |player| !player.folded? } || @round == 4
+		over_by_fold? || over_by_round?
+	end
+
+	def over_by_fold?
+		players.one? { |player| !player.folded? }
+	end
+
+	def over_by_round?
+		@round == 4
 	end
 
 	def game_winner
@@ -26,6 +35,11 @@ class Game
 	def round_winner
 		players.find { |player| !player.folded? }
 	end
+
+	def determine_winner
+
+	end
+
 
 =begin
 	def play
@@ -95,3 +109,4 @@ class Game
 		amount.times { current_player.add_card(deck.draw) }
 	end
 end
+

@@ -40,6 +40,14 @@ describe Game do
 	end
 
 	describe "#round_over?" do
+		it "calls #over_by_fold? and #over_by_round?" do
+			expect(game).to receive(:over_by_fold?)
+			expect(game).to receive(:over_by_round?)
+			game.round_over?
+		end
+	end
+
+	describe "#over_by_fold?" do
 		it "determines if only one player hasn't folded" do
 			allow(player1).to receive(:folded?).and_return(false)
 			allow(player2).to receive(:folded?).and_return(false)
@@ -47,6 +55,14 @@ describe Game do
 
 			allow(player2).to receive(:folded?).and_return(true)
 			expect(game.round_over?).to be(true)
+		end
+	end
+
+	describe "#over_by_round?" do
+		it "determines if the final round of betting has been completed" do
+			expect(game.over_by_round?).to be(false)
+			game.instance_variable_set(:@round, 4)
+			expect(game.over_by_round?).to be(true)
 		end
 	end
 
@@ -59,7 +75,7 @@ describe Game do
 	end
 
 	describe "#round_winner" do
-		it "returns the winning player of the round" do
+		it "returns the player(s) who won the round" do
 			allow(player1).to receive(:folded?).and_return(true)
 			allow(player2).to receive(:folded?).and_return(false)
 			expect(game.round_winner).to be(player2)

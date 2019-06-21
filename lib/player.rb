@@ -1,3 +1,6 @@
+require_relative 'hand'
+require 'pry'
+
 class Player
 	attr_reader :hand, :pot, :folded
 
@@ -5,6 +8,10 @@ class Player
 		@hand   = Hand.new
 		@pot    = 1000
 		@folded = false
+	end
+
+	def score
+		hand.score
 	end
 
 	def fold
