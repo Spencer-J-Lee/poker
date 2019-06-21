@@ -29,16 +29,13 @@ describe Game do
 	end
 
 	describe "#over?" do
-		it "returns true if only one player has money" do
+		it "determines if only one player isn't dirt broke" do
 			allow(player1).to receive(:pot).and_return(1000)
+			allow(player2).to receive(:pot).and_return(1000)
+			expect(game.over?).to be(false)
+			
 			allow(player2).to receive(:pot).and_return(0)
 			expect(game.over?).to be(true)
-		end
-
-		it "returns false if more than one player has money" do
-			allow(player1).to receive(:pot).and_return(1000)
-			allow(player2).to receive(:pot).and_return(1)
-			expect(game.over?).to be(false)
 		end
 	end
 
