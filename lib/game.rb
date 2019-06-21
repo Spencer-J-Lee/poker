@@ -1,8 +1,9 @@
 require_relative 'player'
 require_relative 'deck'
+require_relative 'display'
 
 class PokerGame
-	attr_reader :players, :current_player, :round, :deck, :pot
+	attr_reader :players, :current_player, :round, :deck, :pot, :display
 
 	def initialize(*players)
 		@players        = players
@@ -10,17 +11,7 @@ class PokerGame
 		@round          = nil
 		@deck           = Deck.new
 		@pot            = 0
-	end
-
-	def turn_display
-		system 'clear'
-		puts  "#{current_player.name}'s turn"
-		puts
-		puts  "Current pot: #{pot}"
-		puts  "Wallet:      #{current_player.pot}"
-		print "Hand:        #{current_player.hand.cards}"
-		puts
-		puts
+		@display        = Display.new(self)
 	end
 
 	def play
@@ -28,12 +19,13 @@ class PokerGame
 			@round = 1
 			deal_cards
 
-			until over_by_round?
+			until round_over?
 				not_folded_count = players.count { |player| !player.folded? }
 
 				not_folded_count.times do
 					next_player! while current_player.folded?
-					turn_display
+
+					display.turn_UI
 
 					if round.odd?
 						betting_turn
@@ -43,25 +35,19 @@ class PokerGame
 						next_player!
 					end
 
-					puts "----"
 					break if over_by_fold?
 				end
 
 				@round += 1
 			end
 
-			system 'clear'
-			players.each { |player| p "#{player.name}'s hand: #{player.hand.cards}" }
-			round_winners.each { |player| print player.name + " " }
-			puts "wins the round!"
-			puts
-			gets
+			display.round_end_UI
 
 			distribute_pot
 			reset_players
 		end
 
-		puts "The winner is: #{game_winner.name}"
+		display.winner_announcement_UI
 	end
 
 	def over?
@@ -125,12 +111,13 @@ class PokerGame
 	end
 
 	def betting_turn
-		puts "Choose: raise / fold"
+		display.action_prompt_UI
+
 		action = current_player.get_action
 
 		case action
 		when 'raise'
-			puts "How much to raise?"
+			display.raise_prompt_UI
 			@pot += current_player.get_raise_amount
 		when 'fold'
 			current_player.fold
@@ -138,16 +125,17 @@ class PokerGame
 	end
 
 	def discard_turn
-		puts "How many cards to discard? (0 to 3)"
+		display.discard_amt_prompt_UI
+		
 		amount = current_player.get_discard_amount
 
 		if amount > 0
-			puts "Which cards to discard?"
+			display.discard_which_prompt_UI
+
 			current_player.discard(amount)
 			amount.times { current_player.add_card(deck.draw) }
-			print "New hand: #{current_player.hand.cards}"
-			puts
-			gets
+
+			display.new_hand_UI
 		end
 	end
 
@@ -164,6 +152,6 @@ end
 
 if __FILE__ == $PROGRAM_NAME
 	system 'clear'
-	game = PokerGame.new(Player.new('P1'), Player.new('P2'))
+	game = PokerGame.new(Player.new('P1'), Player.new('P2'), Player.new('P3'))
 	game.play
 end
