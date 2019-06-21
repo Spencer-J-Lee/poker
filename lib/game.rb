@@ -24,7 +24,7 @@ class Game
 		5.times { players.each { |player| player.add_card(deck.draw) } }
 	end
 
-	def betting_round
+	def betting_turn
 		action = current_player.get_action
 
 		case action
@@ -35,5 +35,11 @@ class Game
 		when 'see'
 			display_pot
 		end
+	end
+
+	def discard_turn
+		amount = current_player.get_discard_amount
+		current_player.discard(amount)
+		amount.times { current_player.add_card(deck.draw) }
 	end
 end

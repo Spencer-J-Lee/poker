@@ -53,4 +53,20 @@ describe Game do
 			expect(game.current_player).to eq(player2)
 		end
 	end
+
+	describe "#discard_turn" do
+		it "calls Player#get_discard_amount and Player#discard" do
+			expect(game.current_player).to receive(:get_discard_amount).and_return(0)
+			expect(game.current_player).to receive(:discard)
+			game.discard_turn
+		end
+
+		it "calls Player#add_card and Deck#draw" do
+			expect(game.current_player).to receive(:get_discard_amount).and_return(1)
+			expect(game.current_player).to receive(:discard)
+			expect(game.deck).to receive(:draw).and_return("card")
+			expect(game.current_player).to receive(:add_card).with("card")
+			game.discard_turn
+		end
+	end
 end
