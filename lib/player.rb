@@ -1,11 +1,24 @@
 class Player
-	attr_reader :hand, :pot
+	attr_reader :hand, :pot, :folded
 
 	def initialize
-		@hand = Hand.new
-		@pot  = 1000
+		@hand   = Hand.new
+		@pot    = 1000
+		@folded = false
+	end
+
+	def fold
+		@folded = true
 	end
 	
+	def unfold
+		@folded = false
+	end
+	
+	def folded?
+		@folded
+	end
+
 	def add_card(card)
 		hand.add_card(card)
 	end

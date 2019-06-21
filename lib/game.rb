@@ -34,7 +34,6 @@ class Game
 			current_player.fold
 		when 'see'
 			display_pot
-			retry
 		end
 	end
 end

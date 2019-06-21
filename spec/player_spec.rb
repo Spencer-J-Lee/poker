@@ -13,6 +13,30 @@ describe Player do
 		it "creates a new pot of 1000" do
 			expect(player.pot).to eq(1000)
 		end
+
+		it "sets @folded to false" do
+			expect(player.folded).to be(false)
+		end
+	end
+	
+	describe "#fold" do
+		it "sets @folded to true" do
+			player.fold
+			expect(player.folded).to be(true)
+		end
+	end
+
+	describe "#unfold" do
+		it "sets @folded to false" do
+			player.unfold
+			expect(player.folded).to be(false)
+		end
+	end
+
+	describe "#folded?" do
+		it "returns @folded" do
+			expect(player.folded?).to be(false)
+		end
 	end
 
 	describe "#add_card" do
