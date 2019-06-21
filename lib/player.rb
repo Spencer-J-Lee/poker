@@ -46,6 +46,10 @@ class Player
 		@hand.discard!
 	end
 
+	def add_to_pot(amount)
+		@pot += amount
+	end
+	
 	def get_card_index
 		card_index = $stdin.gets.to_i
 		card_index = $stdin.gets.to_i until card_index.between?(0,4)
@@ -72,7 +76,9 @@ class Player
 	end
 
 	def inspect
-		{ id: self.object_id }.inspect
+		{ hand: 	hand.cards,
+			pot: 		pot,
+			folded: folded }.inspect
 	end
 end
 

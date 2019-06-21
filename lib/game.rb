@@ -12,6 +12,37 @@ class Game
 		@pot            = 0
 	end
 
+	# def play
+	# 	until over?
+	# 		@round = 1
+	# 		deal_cards
+
+	# 		until round_over?
+	# 			if round.odd?
+	# 				until we have reached full rotation
+	# 					next_player! while current_player.folded? # cycle through players until we find one that hasn't folded
+	# 					betting_turn
+	# 					next_player!
+	# 				end
+	# 			else
+	# 				until we have reached full rotation
+	# 					next_player! while current_player.folded?
+	# 					discard_turn
+	# 					next_player!
+	# 				end
+	# 			end
+
+	# 			@round += 1
+	# 		end
+
+	# 		round_winners
+	# 		distribute the pot
+	# 		reset player hands and folded states
+	# 	end
+
+	# 	determine the game winner
+	# end
+
 	def over?
 		players.one? { |player| !player.pot.zero? }
 	end
@@ -32,7 +63,7 @@ class Game
 		players.find { |player| !player.pot.zero? }
 	end
 	
-	def round_winner
+	def round_winners
 		over_by_fold? ? find_winner_by_fold : find_winners_by_hand
 	end
 
@@ -41,7 +72,7 @@ class Game
 	end
 
 	def find_winners_by_hand
-		# returns a 2D-array of the player's score with the last element being the player itself
+		# returns a 2D-array of the players' scores with the last element being the player's themselves
 		scoreboard = players.map { |player| player.score << player }
 
 		# iterates through each player's score and compares scores by index
@@ -55,39 +86,6 @@ class Game
 		# returns all players who have winning hands
 		round_winners = scoreboard.map(&:last)
 	end
-
-=begin
-	def play
-		until over?
-			@round = 1
-			deal_cards
-
-			until the round is over? (only one player isnt folded || the final round of betting already happened)
-				if round.odd?
-					until we have reached full rotation
-						next_player! while current_player.folded? # cycle through players until we find one that hasn't folded
-						betting_turn
-						next_player!
-					end
-				else
-					until we have reached full rotation
-						next_player! while current_player.folded?
-						discard_turn
-						next_player!
-					end
-				end
-
-				@round += 1
-			end
-
-			determine the round winner(s)
-			distribute the pot
-			reset player hands and folded states
-		end
-
-		determine the game winner
-	end
-=end
 
 	def next_player!
 		@players.rotate!
@@ -122,5 +120,15 @@ class Game
 		amount = current_player.get_discard_amount
 		current_player.discard(amount)
 		amount.times { current_player.add_card(deck.draw) }
+	end
+
+	def distribute_pot
+		winners = self.round_winners
+		distribute_amt = pot / winners.count.to_f
+
+		winners.each do |player|
+			player.add_to_pot(distribute_amt)
+			@pot -= distribute_amt
+		end
 	end
 end

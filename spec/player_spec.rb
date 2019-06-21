@@ -63,6 +63,13 @@ describe Player do
 		end
 	end
 
+	describe "#add_to_pot" do
+		it "adds amount given to the pot" do
+			player.add_to_pot(42)
+			expect(player.pot).to eq(1042)
+		end
+	end
+
 	describe "#get_action" do
 		it "gets a valid action from the user" do
 			allow($stdin).to receive(:gets).and_return("fold\n")

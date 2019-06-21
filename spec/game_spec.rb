@@ -74,17 +74,17 @@ describe Game do
 		end
 	end
 
-	describe "#round_winner" do
+	describe "#round_winners" do
 		it "calls #find_winner_by_fold if round ends by fold" do
 			allow(game).to receive(:over_by_fold?).and_return(true)
 			expect(game).to receive(:find_winner_by_fold)
-			game.round_winner
+			game.round_winners
 		end
 			
 		it "calls #find_winners_by_hand if round doesn't end by fold" do
 			allow(game).to receive(:over_by_fold?).and_return(false)
 			expect(game).to receive(:find_winners_by_hand)
-			game.round_winner
+			game.round_winners
 		end
 	end
 
@@ -157,6 +157,25 @@ describe Game do
 			expect(game.deck).to receive(:draw).and_return("card")
 			expect(game.current_player).to receive(:add_card).with("card")
 			game.discard_turn
+		end
+	end
+
+	describe "#distribute_pot" do
+		before(:each) do
+				game.instance_variable_set(:@pot, 500)
+		end
+
+		it "distributes the current pot to the winning player" do
+			allow(game).to receive(:round_winners).and_return([player1])
+			game.distribute_pot
+			expect(player1.pot).to eq(1500)
+		end
+
+		it "evenly distributes the current pot if there are multiple winning players" do
+			allow(game).to receive(:round_winners).and_return([player1,player2])
+			game.distribute_pot
+			expect(player1.pot).to eq(1250)
+			expect(player2.pot).to eq(1250)
 		end
 	end
 end
