@@ -46,6 +46,23 @@ describe Player do
 		end
 	end
 
+	describe "#discard" do
+		it "discards as many cards as the amount given" do
+			allow(player).to receive(:get_card_index).and_return(0)
+			player.add_card(card)
+			player.discard(1)
+			expect(player.hand.cards).to be_empty
+		end
+	end
+
+	describe "#discard_hand!" do
+		it "removes all cards from hand" do
+			player.add_card(card)
+			player.discard_hand!
+			expect(player.hand.cards).to be_empty
+		end
+	end
+
 	describe "#get_action" do
 		it "gets a valid action from the user" do
 			allow($stdin).to receive(:gets).and_return("fold\n")
@@ -81,15 +98,6 @@ describe Player do
 			allow($stdin).to receive(:gets).and_return("600\n")
 			player.get_raise_amount
 			expect(player.pot).to eq(400)
-		end
-	end
-
-	describe "#discard" do
-		it "discards as many cards as the amount given" do
-			allow(player).to receive(:get_card_index).and_return(0)
-			player.add_card(card)
-			player.discard(1)
-			expect(player.hand.cards).to be_empty
 		end
 	end
 end
