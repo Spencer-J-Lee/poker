@@ -72,7 +72,7 @@ class Player
 
 	def get_action
 		action = $stdin.gets.chomp 
-		action = $stdin.gets.chomp until %w(fold see raise).include?(action)
+		action = $stdin.gets.chomp until %w(fold raise).include?(action)
 		action
 	end
 

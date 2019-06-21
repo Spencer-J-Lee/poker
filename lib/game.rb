@@ -133,7 +133,7 @@ class PokerGame
 	end
 
 	def betting_turn
-		puts "Choose: raise / fold / see"
+		puts "Choose: raise / fold"
 		action = current_player.get_action
 
 		case action
@@ -142,8 +142,6 @@ class PokerGame
 			@pot += current_player.get_raise_amount
 		when 'fold'
 			current_player.fold
-		when 'see'
-			display_pot
 		end
 	end
 
