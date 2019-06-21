@@ -50,6 +50,22 @@ describe Game do
 		end
 	end
 
+	describe "#game_winner" do
+		it "returns the winning player of the game" do
+			allow(player1).to receive(:pot).and_return(0)
+			allow(player2).to receive(:pot).and_return(2000)
+			expect(game.game_winner).to be(player2)
+		end
+	end
+
+	describe "#round_winner" do
+		it "returns the winning player of the round" do
+			allow(player1).to receive(:folded?).and_return(true)
+			allow(player2).to receive(:folded?).and_return(false)
+			expect(game.round_winner).to be(player2)
+		end
+	end
+
 	describe "#next_player!" do
 		before(:each) { game.next_player! }
 

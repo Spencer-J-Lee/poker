@@ -18,7 +18,15 @@ class Game
 	def round_over?
 		players.one? { |player| !player.folded? }
 	end
+
+	def game_winner
+		players.find { |player| !player.pot.zero? }
+	end
 	
+	def round_winner
+		players.find { |player| !player.folded? }
+	end
+
 =begin
 	def play
 		until over?
