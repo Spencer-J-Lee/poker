@@ -15,6 +15,10 @@ class Game
 		players.one? { |player| !player.pot.zero? }
 	end
 
+	def round_over?
+		players.one? { |player| !player.folded? }
+	end
+	
 =begin
 	def play
 		until over?

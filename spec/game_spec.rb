@@ -39,6 +39,17 @@ describe Game do
 		end
 	end
 
+	describe "#round_over?" do
+		it "determines if only one player hasn't folded" do
+			allow(player1).to receive(:folded?).and_return(false)
+			allow(player2).to receive(:folded?).and_return(false)
+			expect(game.round_over?).to be(false)
+
+			allow(player2).to receive(:folded?).and_return(true)
+			expect(game.round_over?).to be(true)
+		end
+	end
+
 	describe "#next_player!" do
 		before(:each) { game.next_player! }
 
