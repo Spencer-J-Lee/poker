@@ -18,5 +18,13 @@ describe Game do
 		it "keeps track of whose turn it is" do
 			expect(game.current_player).to eq(player1)
 		end
+
+		it "sets @deck to a new deck instance" do
+			expect(game.deck.is_a?(Deck)).to be(true)
+		end
+
+		it "sets @pot to an empty pot" do
+			expect(game.pot).to eq(0)
+		end
 	end
 end
