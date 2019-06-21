@@ -10,10 +10,16 @@ class Player
 		hand.add_card(card)
 	end
 
-	def get_action
-		action = $stdin.gets.chomp 
-		action = $stdin.gets.chomp until %w(fold see raise).include?(action)
-		action
+	def discard(amount)
+		discarded = 0
+
+		until discarded == amount
+			card_index = get_card_index
+			hand.discard_at(card_index)
+			discarded += 1
+		end
+
+		nil
 	end
 
 	def get_card_index
@@ -35,16 +41,10 @@ class Player
 		raise_amount
 	end
 
-	def discard(amount)
-		discarded = 0
-
-		until discarded == amount
-			card_index = get_card_index
-			hand.discard_at(card_index)
-			discarded += 1
-		end
-
-		nil
+	def get_action
+		action = $stdin.gets.chomp 
+		action = $stdin.gets.chomp until %w(fold see raise).include?(action)
+		action
 	end
 end
 
