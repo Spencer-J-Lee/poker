@@ -177,5 +177,11 @@ describe Game do
 			expect(player1.pot).to eq(1250)
 			expect(player2.pot).to eq(1250)
 		end
+
+		it "empties the pot" do
+			allow(game).to receive(:round_winners).and_return([player1])
+			game.distribute_pot
+			expect(game.pot.zero?).to be(true)
+		end
 	end
 end
