@@ -14,4 +14,9 @@ class Game
 	def over?
 		players.one? { |player| !player.pot.zero? }
 	end
+
+	def next_player!
+		@players.rotate!
+		@current_player = players.first
+	end
 end
