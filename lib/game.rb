@@ -57,6 +57,13 @@ class Game
 		@current_player = players.first
 	end
 
+	def reset_players
+		players.each do |player| 
+			player.discard_hand!
+			player.unfold
+		end
+	end
+
 	def deal_cards
 		5.times { players.each { |player| player.add_card(deck.draw) } }
 	end

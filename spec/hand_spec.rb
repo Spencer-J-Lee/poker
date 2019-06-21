@@ -103,6 +103,14 @@ describe Hand do
 		end
 	end
 
+	describe "#discard!" do
+		it "removes all cards" do
+			hand.add_card(aceS)
+			hand.discard!
+			expect(hand.cards).to be_empty
+		end
+	end
+	
 	describe "#ranking" do
 		it "returns the hand's type and type score" do
 			expect(royal_flush_hand.ranking).to eq([:royal_flush, 9])

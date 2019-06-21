@@ -62,6 +62,16 @@ describe Game do
 		end
 	end
 
+	describe "#reset_players" do
+		it "calls #discard_hand! and #unfold on each player" do
+			expect(player1).to receive(:discard_hand!)
+			expect(player2).to receive(:discard_hand!)
+			expect(player1).to receive(:unfold)
+			expect(player2).to receive(:unfold)
+			game.reset_players
+		end
+	end
+
 	describe "#discard_turn" do
 		it "calls Player#get_discard_amount and Player#discard" do
 			expect(game.current_player).to receive(:get_discard_amount).and_return(0)

@@ -30,6 +30,10 @@ class Hand
 		cards.delete_at(card_index)
 	end
 
+	def discard!
+		@cards = []
+	end
+
 	def ranking
 		RANKING.detect { |method, score| send :"#{method}?" } || [:high_card, 0]
 	end
