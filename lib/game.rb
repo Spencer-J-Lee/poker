@@ -12,52 +12,46 @@ class PokerGame
 		@pot            = 0
 	end
 
+	def turn_display
+		system 'clear'
+		puts  "#{current_player.name}'s turn"
+		puts
+		puts  "Current pot: #{pot}"
+		puts  "Wallet:      #{current_player.pot}"
+		print "Hand:        #{current_player.hand.cards}"
+		puts
+		puts
+	end
+
 	def play
 		until over?
 			@round = 1
 			deal_cards
 
-			until round_over?
-				if round.odd?
-					2.times do
-						system 'clear'
-						next_player! while current_player.folded? # cycle through players until we find one that hasn't folded
-						
-						puts  "#{current_player.name}'s turn"
-						puts
-						puts  "Current pot: #{pot}"
-						puts  "Wallet:      #{current_player.pot}"
-						print "Hand:        #{current_player.hand.cards}"
-						puts
-						puts
+			until over_by_round?
+				not_folded_count = players.count { |player| !player.folded? }
+
+				not_folded_count.times do
+					next_player! while current_player.folded?
+					turn_display
+
+					if round.odd?
 						betting_turn
-
 						next_player!
-						puts "-----------"
-					end
-				else
-					2.times do
-						system 'clear'
-						next_player! while current_player.folded?
-
-						puts  "#{current_player.name}'s turn"
-						puts
-						puts  "Current pot: #{pot}"
-						puts  "Wallet:      #{current_player.pot}"
-						print "Hand:        #{current_player.hand.cards}"
-						puts
-						puts
+					else
 						discard_turn
-
 						next_player!
-						puts "-----------"
 					end
+
+					puts "----"
+					break if over_by_fold?
 				end
 
 				@round += 1
 			end
 
 			system 'clear'
+			players.each { |player| p "#{player.name}'s hand: #{player.hand.cards}" }
 			round_winners.each { |player| print player.name + " " }
 			puts "wins the round!"
 			puts
@@ -67,8 +61,6 @@ class PokerGame
 			reset_players
 		end
 
-		
-		system 'clear'
 		puts "The winner is: #{game_winner.name}"
 	end
 
@@ -149,12 +141,14 @@ class PokerGame
 		puts "How many cards to discard? (0 to 3)"
 		amount = current_player.get_discard_amount
 
-		puts "Which cards to discard?"
-		current_player.discard(amount)
-		amount.times { current_player.add_card(deck.draw) }
-		print "New hand: #{current_player.hand.cards}"
-		puts
-		gets
+		if amount > 0
+			puts "Which cards to discard?"
+			current_player.discard(amount)
+			amount.times { current_player.add_card(deck.draw) }
+			print "New hand: #{current_player.hand.cards}"
+			puts
+			gets
+		end
 	end
 
 	def distribute_pot
